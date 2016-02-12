@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="large-12 columns">
+        <label>Filtra tu búsqueda: </label>
+        <input type="text" ng-model="buscador" />
+    </div>
+    <div class="large-12 columns">
+        <label>Establece un orden: </label>
+        <select ng-model="tipoOrden">
+            <option value="">Ordena por Id</option>
+            <option value="id">Ascendente</option>
+            <option value="-id">Descendente</option>
+        </select>
+    </div>
+</div>
+ 
+<div class="row">
+    <h1 class="subheader">Combinando Laravel 4 y AngularJS</h1>
+    <ul>
+        <li ng-repeat="data in datos|filter:buscador|orderBy:tipoOrden" class="panel callout radius">
+            <p>Id: {{ data.id }} </p>
+            <p>Título: {{ data.title }}</p> 
+            <p>Contenido: {{ data.content }}</p>
+        </li>
+    </ul>
+</div>
