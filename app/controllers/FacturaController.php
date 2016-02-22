@@ -37,7 +37,7 @@ class FacturaController extends \BaseController {
     $dosificacion = Dosificacione::find(1);
     $fecha = str_replace("-","",$input["fecha"]);
     $fecha = substr($fecha,0,8);
-    $trunc = str_replace(',', '.', $input["monto"]);
+    $trunc = str_replace(',', '.', $input["montot"]);
     $trunc = round($trunc, 0);
     $CodigoControl = new CodigoControl(
       $dosificacion->autorizacion,
@@ -56,8 +56,13 @@ class FacturaController extends \BaseController {
     $input["control"]=$codigo;
     $input["autorizacion"]=$dosificacion->autorizacion;
     $input["vencimiento"]=$dosificacion->vencimiento;
-    $input["monto"]=$trunc;
+    $input["literal"]=$CodigoControl->numaletras(round($input["montot"],2));    
+    $input["montot"]=$trunc;
     $input["clave"]=$dosificacion->clave;
+
+    $dosificacion->numero=$dosificacion->numero+1;
+    $dosificacion->save();
+
     $Factura = Factura::create($input);
     return Response::json($Factura);
   }
