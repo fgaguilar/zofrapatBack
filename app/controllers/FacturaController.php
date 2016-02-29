@@ -1,5 +1,6 @@
 <?php
 require_once('codigoControl/codigo_control.class.php'); 
+require_once('phpqrcode/qrlib.php'); 
 //require_once('codigoControl/ChromePhp.php');
 class FacturaController extends \BaseController {
 
@@ -64,6 +65,13 @@ class FacturaController extends \BaseController {
     $dosificacion->save();
 
     $Factura = Factura::create($input);
+
+    $qr = '1005057029'.'|'.$input["factura"].'|'.$input["autorizacion"].'|'.$fecha.'|'.$input["montot"].'|'.'0'.'|'.$input["control"].'|'.$input["nit"].'|'.'0'.'|'.'0'.'|'.'0'.'|'.'0';
+    $filename = $input["factura"].'.png';
+    /*var_dump($filename);
+    die;*/    
+    QRcode::png($qr, $filename);
+
     return Response::json($Factura);
   }
 
